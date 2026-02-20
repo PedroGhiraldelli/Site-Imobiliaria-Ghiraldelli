@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin – Ghiraldelli Imobiliária</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg class="logo-mark login-logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      <h1>Ghiraldelli Imobiliária</h1>
+      <p>Acesso restrito à equipe interna</p>
+    </div>
+
+    <form id="login-form" onsubmit="doLogin(event)">
+      <div class="form-group">
+        <label>Usuário</label>
+        <input type="text" id="usuario" value="admin" required autocomplete="username"/>
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="senha" placeholder="••••••••" required autocomplete="current-password"/>
+      </div>
+      <button type="submit" class="btn btn-ouro login-btn" id="login-btn">Entrar</button>
+      <p class="login-error" id="login-error">Usuário ou senha inválidos.</p>
+    </form>
+
+    <div style="text-align:center;margin-top:1.5rem">
+      <a href="../index.html" style="font-size:.85rem;color:var(--txt-m)">← Voltar ao site</a>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  // Redireciona se já estiver logado
+  if (isLoggedIn()) window.location.href = './painel.html';
+
+  async function doLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('login-btn');
+    const err = document.getElementById('login-error');
+    btn.disabled = true;
+    btn.textContent = 'Entrando...';
+    err.style.display = 'none';
+
+    try {
+      const data = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          usuario: document.getElementById('usuario').value,
+          senha:   document.getElementById('senha').value,
+        })
+      });
+      const json = await data.json();
+      if (!data.ok) throw new Error(json.error);
+      saveToken(json.token);
+      window.location.href = './painel.html';
+    } catch(ex) {
+      err.textContent = ex.message || 'Erro ao fazer login.';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    }
+  }
+</script>
+</body>
+</html>

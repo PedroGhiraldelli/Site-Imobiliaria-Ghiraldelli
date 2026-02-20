@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Imóveis – Ghiraldelli Imobiliária</title>
+  <link rel="stylesheet" href="./css/style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <a href="./index.html" class="nav-logo">
+      <svg class="logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      <div class="nav-logo-text">Ghiraldelli<span>Imobiliária</span></div>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="./index.html">Início</a></li>
+      <li><a href="./imoveis.html">Imóveis</a></li>
+      <li><a href="./index.html#sobre">Sobre</a></li>
+      <li><a href="./index.html#contato">Contato</a></li>
+      <li><a href="./admin/login.html" class="btn btn-ouro btn-sm">Área Admin</a></li>
+    </ul>
+    <div class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h1>Nossos Imóveis</h1>
+    <p>Encontre o imóvel perfeito para você</p>
+  </div>
+</div>
+
+<!-- LISTING -->
+<div class="container">
+  <div class="listing-layout">
+
+    <!-- FILTROS -->
+    <aside class="filters-panel">
+      <h3>🔍 Filtrar Imóveis</h3>
+
+      <div class="filter-group">
+        <label>Tipo de Imóvel</label>
+        <select id="f-tipo">
+          <option value="">Todos</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Comercial">Comercial</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Negócio</label>
+        <select id="f-transacao">
+          <option value="">Todos</option>
+          <option value="Venda">Venda</option>
+          <option value="Aluguel">Aluguel</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Cidade</label>
+        <input type="text" id="f-cidade" placeholder="Digite a cidade"/>
+      </div>
+
+      <div class="filter-group">
+        <label>Faixa de Preço</label>
+        <div class="price-range">
+          <input type="number" id="f-min" placeholder="Mín" min="0" step="10000"/>
+          <input type="number" id="f-max" placeholder="Máx" min="0" step="10000"/>
+        </div>
+      </div>
+
+      <button class="btn btn-ouro" style="width:100%" onclick="aplicarFiltros()">Aplicar Filtros</button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:.6rem;border-color:var(--cinza-md);color:var(--txt-m)" onclick="limparFiltros()">Limpar Filtros</button>
+    </aside>
+
+    <!-- RESULTADOS -->
+    <div>
+      <div class="results-header">
+        <p class="results-count">Exibindo <strong id="count-text">—</strong> imóveis</p>
+        <select id="f-order" style="padding:8px 12px;border:1.5px solid var(--cinza);border-radius:var(--r);font-size:.88rem;outline:none" onchange="aplicarFiltros()">
+          <option value="">Mais recentes</option>
+          <option value="preco_asc">Menor preço</option>
+          <option value="preco_desc">Maior preço</option>
+        </select>
+      </div>
+
+      <div class="property-grid" id="grid-imoveis">
+        <div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⏳</div><p>Carregando...</p></div>
+      </div>
+
+      <div class="pagination" id="paginacao"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <svg class="logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          <div class="nav-logo-text">Ghiraldelli<span>Imobiliária</span></div>
+        </div>
+        <p>Realizando sonhos e construindo histórias há mais de 20 anos.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Links</h4>
+        <a href="./index.html">Início</a>
+        <a href="./imoveis.html">Imóveis</a>
+        <a href="./index.html#sobre">Sobre nós</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a id="footer-wpp" href="#">💬 WhatsApp</a>
+        <a href="#">📍 São Paulo, SP</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 <span>Ghiraldelli Imobiliária</span>. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<a id="wpp-float" href="#" target="_blank" class="whatsapp-float" title="Falar no WhatsApp">💬</a>
+
+<script src="./js/app.js"></script>
+<script>
+  let currentPage = 1;
+  const LIMIT = 12;
+
+  function getFilters() {
+    return {
+      tipo:      document.getElementById('f-tipo').value,
+      transacao: document.getElementById('f-transacao').value,
+      cidade:    document.getElementById('f-cidade').value,
+      min:       document.getElementById('f-min').value,
+      max:       document.getElementById('f-max').value,
+    };
+  }
+
+  function buildParams(page = 1) {
+    const f = getFilters();
+    const p = new URLSearchParams({ limit: LIMIT, page });
+    if (f.tipo)      p.set('tipo', f.tipo);
+    if (f.transacao) p.set('transacao', f.transacao);
+    if (f.cidade)    p.set('cidade', f.cidade);
+    if (f.min)       p.set('min', f.min);
+    if (f.max)       p.set('max', f.max);
+    return p;
+  }
+
+  async function loadImoveis(page = 1) {
+    currentPage = page;
+    const params = buildParams(page);
+    const grid = document.getElementById('grid-imoveis');
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⏳</div><p>Carregando...</p></div>';
+
+    try {
+      const data = await apiGet('/imoveis?' + params.toString());
+      document.getElementById('count-text').textContent = data.total;
+
+      if (!data.imoveis.length) {
+        grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🏠</div><p>Nenhum imóvel encontrado com esses filtros.</p></div>';
+        document.getElementById('paginacao').innerHTML = '';
+        return;
+      }
+
+      grid.innerHTML = data.imoveis.map(buildCard).join('');
+      renderPaginacao(data.paginas, page);
+    } catch(e) {
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><p>Erro ao carregar imóveis.</p></div>';
+    }
+  }
+
+  function renderPaginacao(total, current) {
+    const pg = document.getElementById('paginacao');
+    if (total <= 1) { pg.innerHTML = ''; return; }
+    let html = '';
+    html += `<button class="page-btn" onclick="loadImoveis(${current-1})" ${current===1?'disabled':''}>‹</button>`;
+    for (let i = 1; i <= total; i++) {
+      html += `<button class="page-btn ${i===current?'active':''}" onclick="loadImoveis(${i})">${i}</button>`;
+    }
+    html += `<button class="page-btn" onclick="loadImoveis(${current+1})" ${current===total?'disabled':''}>›</button>`;
+    pg.innerHTML = html;
+  }
+
+  function aplicarFiltros() { loadImoveis(1); }
+
+  function limparFiltros() {
+    ['f-tipo','f-transacao','f-cidade','f-min','f-max'].forEach(id => {
+      const el = document.getElementById(id);
+      el.tagName === 'SELECT' ? (el.value = '') : (el.value = '');
+    });
+    loadImoveis(1);
+  }
+
+  // Ler params da URL
+  function initFromUrl() {
+    const p = new URLSearchParams(location.search);
+    if (p.get('tipo'))      document.getElementById('f-tipo').value      = p.get('tipo');
+    if (p.get('transacao')) document.getElementById('f-transacao').value = p.get('transacao');
+    if (p.get('cidade'))    document.getElementById('f-cidade').value    = p.get('cidade');
+    if (p.get('min'))       document.getElementById('f-min').value       = p.get('min');
+    if (p.get('max'))       document.getElementById('f-max').value       = p.get('max');
+  }
+
+  document.getElementById('f-cidade').addEventListener('keydown', e => { if(e.key==='Enter') aplicarFiltros(); });
+
+  // Após carregar config WhatsApp
+  const origLoad = loadWhatsapp;
+  loadWhatsapp = async function() {
+    await origLoad();
+    document.getElementById('footer-wpp').href = whatsappLink(null);
+  };
+
+  initFromUrl();
+  loadImoveis(1);
+</script>
+</body>
+</html>

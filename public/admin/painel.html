@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Painel Admin – Ghiraldelli</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <svg class="logo-mark sidebar-logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        <div class="sidebar-logo-text">Ghiraldelli<span>Painel Admin</span></div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="active" onclick="showSection('dashboard',this)">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a href="#" onclick="showSection('imoveis',this)">
+        <span class="nav-icon">🏠</span> Imóveis
+      </a>
+      <a href="#" onclick="showSection('config',this)">
+        <span class="nav-icon">⚙️</span> Configurações
+      </a>
+      <a href="../index.html" target="_blank">
+        <span class="nav-icon">🌐</span> Ver site
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="#" onclick="doLogout()">🚪 Sair</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1 id="topbar-title">Dashboard</h1>
+      <div class="topbar-actions">
+        <button class="btn btn-ouro btn-sm" id="topbar-new-btn" onclick="openModal()" style="display:none">
+          + Novo Imóvel
+        </button>
+        <span style="font-size:.85rem;color:var(--txt-m)">admin</span>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- DASHBOARD -->
+      <div id="section-dashboard">
+        <div class="stat-cards">
+          <div class="stat-card blue">
+            <div class="stat-label">Total de Imóveis</div>
+            <div class="stat-value" id="stat-total">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">À Venda</div>
+            <div class="stat-value" id="stat-venda">—</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Para Alugar</div>
+            <div class="stat-value" id="stat-aluguel">—</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-label">Em Destaque</div>
+            <div class="stat-value" id="stat-destaque">—</div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2>Imóveis Recentes</h2>
+            <a href="#" onclick="showSection('imoveis',null)" style="font-size:.85rem;color:var(--ouro)">Ver todos →</a>
+          </div>
+          <div id="dash-table-wrap" style="overflow-x:auto"></div>
+        </div>
+      </div>
+
+      <!-- IMÓVEIS -->
+      <div id="section-imoveis" style="display:none">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2>Todos os Imóveis</h2>
+            <div style="display:flex;gap:.8rem;align-items:center">
+              <input type="text" id="table-search" placeholder="Buscar por título..." onkeyup="filterTable()"
+                style="padding:7px 12px;border:1.5px solid var(--cinza);border-radius:var(--r);font-size:.88rem;outline:none;width:220px"/>
+              <button class="btn btn-ouro btn-sm" onclick="openModal()">+ Novo Imóvel</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table id="main-table">
+              <thead>
+                <tr>
+                  <th>Foto</th><th>Título</th><th>Tipo</th><th>Negócio</th>
+                  <th>Preço</th><th>Cidade</th><th>Destaque</th><th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txt-m)">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONFIG -->
+      <div id="section-config" style="display:none">
+        <div class="config-card">
+          <h3>📱 WhatsApp</h3>
+          <div class="form-col" style="margin-bottom:1.2rem">
+            <label>Número (com DDI e DDD, sem espaços ou traços)</label>
+            <input type="text" id="cfg-wpp" placeholder="5511999999999"/>
+          </div>
+          <button class="btn btn-ouro" onclick="saveWpp()">Salvar WhatsApp</button>
+        </div>
+
+        <div class="config-card" style="margin-top:1.5rem">
+          <h3>🔑 Alterar Senha do Admin</h3>
+          <div class="form-col" style="margin-bottom:.8rem">
+            <label>Nova Senha</label>
+            <input type="password" id="cfg-senha" placeholder="Nova senha"/>
+          </div>
+          <div class="form-col" style="margin-bottom:1.2rem">
+            <label>Confirmar Senha</label>
+            <input type="password" id="cfg-senha2" placeholder="Repita a senha"/>
+          </div>
+          <button class="btn btn-azul" onclick="saveSenha()">Alterar Senha</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODAL IMÓVEL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Novo Imóvel</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="form-id"/>
+
+      <div class="form-row">
+        <div class="form-col full">
+          <label>Título *</label>
+          <input type="text" id="form-titulo" placeholder="Ex: Casa de 3 quartos em condomínio fechado"/>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label>Tipo *</label>
+          <select id="form-tipo">
+            <option value="Casa">Casa</option>
+            <option value="Apartamento">Apartamento</option>
+            <option value="Terreno">Terreno</option>
+            <option value="Comercial">Comercial</option>
+          </select>
+        </div>
+        <div class="form-col">
+          <label>Negócio *</label>
+          <select id="form-transacao">
+            <option value="Venda">Venda</option>
+            <option value="Aluguel">Aluguel</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label>Preço (R$) *</label>
+          <input type="number" id="form-preco" placeholder="450000" min="0" step="1000"/>
+        </div>
+        <div class="form-col">
+          <label>Área (m²)</label>
+          <input type="number" id="form-area" placeholder="120" min="0"/>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label>Cidade *</label>
+          <input type="text" id="form-cidade" placeholder="São Paulo"/>
+        </div>
+        <div class="form-col">
+          <label>Bairro</label>
+          <input type="text" id="form-bairro" placeholder="Jardins"/>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label>Quartos</label>
+          <input type="number" id="form-quartos" value="0" min="0"/>
+        </div>
+        <div class="form-col">
+          <label>Banheiros</label>
+          <input type="number" id="form-banheiros" value="0" min="0"/>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col">
+          <label>Vagas de Garagem</label>
+          <input type="number" id="form-vagas" value="0" min="0"/>
+        </div>
+        <div class="form-col" style="justify-content:flex-end;padding-bottom:.4rem">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.9rem;text-transform:none;letter-spacing:0">
+            <input type="checkbox" id="form-destaque" style="width:16px;height:16px;accent-color:var(--ouro)"/>
+            Imóvel em Destaque
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-col full">
+          <label>Descrição</label>
+          <textarea id="form-descricao" placeholder="Descreva o imóvel..."></textarea>
+        </div>
+      </div>
+
+      <!-- FOTOS -->
+      <div style="margin-top:.5rem">
+        <label style="font-size:.78rem;font-weight:600;color:var(--txt-m);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:.5rem">
+          Fotos (até 10 · JPG/PNG/WEBP · máx 8MB cada)
+        </label>
+        <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()"
+             ondragover="e=>{e.preventDefault();this.classList.add('drag')}"
+             ondragleave="this.classList.remove('drag')"
+             ondrop="handleDrop(event)">
+          <div style="font-size:2.5rem">📷</div>
+          <p>Clique ou arraste imagens aqui</p>
+          <input type="file" id="file-input" multiple accept=".jpg,.jpeg,.png,.webp" onchange="handleFiles(this.files)"/>
+        </div>
+        <div class="upload-previews" id="upload-previews"></div>
+        <!-- Fotos existentes (modo edição) -->
+        <div id="existing-photos" style="display:none;margin-top:.8rem">
+          <p style="font-size:.8rem;color:var(--txt-m);margin-bottom:.5rem">Fotos já salvas:</p>
+          <div class="upload-previews" id="existing-photos-grid"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" style="border-color:var(--cinza-md);color:var(--txt-m)" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-ouro" id="save-btn" onclick="saveImovel()">💾 Salvar Imóvel</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

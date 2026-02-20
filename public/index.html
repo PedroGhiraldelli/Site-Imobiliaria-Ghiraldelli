@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Ghiraldelli Imobiliária – Encontre seu imóvel ideal</title>
+  <link rel="stylesheet" href="./css/style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <a href="./index.html" class="nav-logo">
+      <svg class="logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      <div class="nav-logo-text">Ghiraldelli<span>Imobiliária</span></div>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="./index.html">Início</a></li>
+      <li><a href="./imoveis.html">Imóveis</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a href="./admin/login.html" class="btn btn-ouro btn-sm">Área Admin</a></li>
+    </ul>
+    <div class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container hero-content">
+    <span class="hero-badge">✨ Sua nova vida começa aqui</span>
+    <h1>Encontre o imóvel<br>dos seus <em>sonhos</em></h1>
+    <p>Casas, apartamentos e terrenos selecionados para você.<br>Atendimento personalizado com quem entende do mercado.</p>
+
+    <div class="hero-search">
+      <div class="hero-search-field">
+        <label>Tipo</label>
+        <select id="s-tipo">
+          <option value="">Todos</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Comercial">Comercial</option>
+        </select>
+      </div>
+      <div class="hero-search-field">
+        <label>Negócio</label>
+        <select id="s-transacao">
+          <option value="">Todos</option>
+          <option value="Venda">Venda</option>
+          <option value="Aluguel">Aluguel</option>
+        </select>
+      </div>
+      <div class="hero-search-field">
+        <label>Cidade</label>
+        <input type="text" id="s-cidade" placeholder="Ex: São Paulo"/>
+      </div>
+      <button class="btn btn-ouro" onclick="buscar()">🔍 Buscar</button>
+    </div>
+
+    <div class="hero-stats" id="hero-stats">
+      <div class="hero-stat"><strong id="stat-total">—</strong><span>Imóveis disponíveis</span></div>
+      <div class="hero-stat"><strong>+20</strong><span>Anos de experiência</span></div>
+      <div class="hero-stat"><strong>98%</strong><span>Clientes satisfeitos</span></div>
+    </div>
+  </div>
+
+  <!-- Skyline decorativa (fundo do hero) -->
+  <div class="hero-skyline" aria-hidden="true">
+    <svg viewBox="0 0 1440 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+      <!-- Edifícios em camadas -->
+      <rect x="0"    y="140" width="60"  height="80" fill="rgba(255,255,255,.03)"/>
+      <rect x="65"   y="110" width="50"  height="110" fill="rgba(255,255,255,.04)"/>
+      <polygon points="90,110 90,88 65,110" fill="rgba(255,255,255,.04)"/>
+      <rect x="120"  y="80"  width="70"  height="140" fill="rgba(255,255,255,.05)"/>
+      <polygon points="155,80 155,58 120,80" fill="rgba(255,255,255,.05)"/>
+      <rect x="195"  y="120" width="45"  height="100" fill="rgba(255,255,255,.03)"/>
+      <rect x="245"  y="95"  width="55"  height="125" fill="rgba(255,255,255,.04)"/>
+      <polygon points="272,95 272,74 245,95" fill="rgba(255,255,255,.04)"/>
+      <rect x="305"  y="130" width="40"  height="90" fill="rgba(255,255,255,.03)"/>
+      <rect x="350"  y="70"  width="80"  height="150" fill="rgba(255,255,255,.05)"/>
+      <polygon points="390,70 390,48 350,70" fill="rgba(255,255,255,.05)"/>
+      <rect x="440"  y="100" width="55"  height="120" fill="rgba(255,255,255,.04)"/>
+      <rect x="500"  y="85"  width="65"  height="135" fill="rgba(201,168,76,.04)"/>
+      <polygon points="532,85 532,62 500,85" fill="rgba(201,168,76,.05)"/>
+      <rect x="570"  y="115" width="50"  height="105" fill="rgba(255,255,255,.03)"/>
+      <rect x="625"  y="60"  width="90"  height="160" fill="rgba(255,255,255,.06)"/>
+      <polygon points="670,60 670,38 625,60" fill="rgba(255,255,255,.05)"/>
+      <rect x="720"  y="90"  width="60"  height="130" fill="rgba(255,255,255,.04)"/>
+      <rect x="785"  y="105" width="45"  height="115" fill="rgba(255,255,255,.03)"/>
+      <rect x="835"  y="75"  width="75"  height="145" fill="rgba(201,168,76,.04)"/>
+      <polygon points="872,75 872,52 835,75" fill="rgba(201,168,76,.05)"/>
+      <rect x="915"  y="120" width="50"  height="100" fill="rgba(255,255,255,.03)"/>
+      <rect x="970"  y="88"  width="60"  height="132" fill="rgba(255,255,255,.05)"/>
+      <polygon points="1000,88 1000,66 970,88" fill="rgba(255,255,255,.04)"/>
+      <rect x="1035" y="110" width="55"  height="110" fill="rgba(255,255,255,.04)"/>
+      <rect x="1095" y="65"  width="85"  height="155" fill="rgba(255,255,255,.06)"/>
+      <polygon points="1137,65 1137,42 1095,65" fill="rgba(255,255,255,.05)"/>
+      <rect x="1185" y="95"  width="60"  height="125" fill="rgba(255,255,255,.04)"/>
+      <rect x="1250" y="115" width="50"  height="105" fill="rgba(255,255,255,.03)"/>
+      <rect x="1305" y="80"  width="70"  height="140" fill="rgba(201,168,76,.04)"/>
+      <polygon points="1340,80 1340,58 1305,80" fill="rgba(201,168,76,.04)"/>
+      <rect x="1380" y="125" width="60"  height="95" fill="rgba(255,255,255,.03)"/>
+      <!-- Janelas -->
+      <g fill="rgba(201,168,76,.1)">
+        <rect x="127" y="90" width="10" height="12"/><rect x="143" y="90" width="10" height="12"/>
+        <rect x="159" y="90" width="10" height="12"/><rect x="127" y="108" width="10" height="12"/>
+        <rect x="143" y="108" width="10" height="12"/><rect x="159" y="108" width="10" height="12"/>
+        <rect x="357" y="82" width="12" height="14"/><rect x="375" y="82" width="12" height="14"/>
+        <rect x="393" y="82" width="12" height="14"/><rect x="357" y="102" width="12" height="14"/>
+        <rect x="375" y="102" width="12" height="14"/><rect x="393" y="102" width="12" height="14"/>
+        <rect x="632" y="72" width="14" height="16"/><rect x="652" y="72" width="14" height="16"/>
+        <rect x="672" y="72" width="14" height="16"/><rect x="632" y="94" width="14" height="16"/>
+        <rect x="652" y="94" width="14" height="16"/><rect x="672" y="94" width="14" height="16"/>
+        <rect x="1102" y="76" width="13" height="15"/><rect x="1121" y="76" width="13" height="15"/>
+        <rect x="1140" y="76" width="13" height="15"/><rect x="1102" y="97" width="13" height="15"/>
+        <rect x="1121" y="97" width="13" height="15"/><rect x="1140" y="97" width="13" height="15"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider wave-up" style="background:var(--off)">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#0B2545"/>
+  </svg>
+</div>
+
+<!-- DESTAQUES -->
+<section id="destaques">
+  <div class="container">
+    <span class="section-label">Imóveis em Destaque</span>
+    <h2 class="section-title">Selecionados para você</h2>
+    <p class="section-sub">Os melhores imóveis escolhidos pela nossa equipe. Oportunidades únicas esperando por você.</p>
+    <div class="property-grid" id="grid-destaques">
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon">⏳</div><p>Carregando...</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="./imoveis.html" class="btn btn-outline btn-lg">Ver todos os imóveis →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <span class="section-label">Por que nos escolher</span>
+    <h2 class="section-title">A Ghiraldelli que você pode confiar</h2>
+    <p class="section-sub">Décadas de experiência no mercado imobiliário garantem a você a melhor negociação.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <circle cx="24" cy="24" r="22" stroke="#C9A84C" stroke-width="2" fill="rgba(201,168,76,.08)"/>
+            <path d="M24 12 L28 20 L37 21 L30.5 27 L32 36 L24 32 L16 36 L17.5 27 L11 21 L20 20 Z" fill="#C9A84C" opacity=".9"/>
+          </svg>
+        </div>
+        <h3>Experiência no Mercado</h3>
+        <p>Mais de 20 anos atuando no setor imobiliário, com profundo conhecimento da região.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <circle cx="24" cy="24" r="22" stroke="#C9A84C" stroke-width="2" fill="rgba(201,168,76,.08)"/>
+            <path d="M16 18 C16 14.7 18.7 12 22 12 C25.3 12 28 14.7 28 18 C28 21.3 25.3 24 22 24 C18.7 24 16 21.3 16 18Z" fill="#C9A84C" opacity=".9"/>
+            <path d="M26 18 C26 14.7 28.7 12 32 12" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+            <path d="M10 36 C10 30.5 15.4 26 22 26 C28.6 26 34 30.5 34 36" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" fill="none" opacity=".9"/>
+            <path d="M30 27 C33 25.5 37 27 38 30" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/>
+          </svg>
+        </div>
+        <h3>Atendimento Personalizado</h3>
+        <p>Equipe dedicada a entender suas necessidades e encontrar o imóvel perfeito para você.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <circle cx="24" cy="24" r="22" stroke="#C9A84C" stroke-width="2" fill="rgba(201,168,76,.08)"/>
+            <rect x="14" y="11" width="20" height="26" rx="2" stroke="#C9A84C" stroke-width="1.8" fill="none" opacity=".9"/>
+            <line x1="18" y1="18" x2="30" y2="18" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <line x1="18" y1="23" x2="30" y2="23" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <line x1="18" y1="28" x2="25" y2="28" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <path d="M28 31 L32 35 L38 28" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <h3>Assessoria Jurídica</h3>
+        <p>Todo o processo documental acompanhado por especialistas para sua tranquilidade.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <circle cx="24" cy="24" r="22" stroke="#C9A84C" stroke-width="2" fill="rgba(201,168,76,.08)"/>
+            <circle cx="20" cy="20" r="6" stroke="#C9A84C" stroke-width="1.8" fill="none" opacity=".9"/>
+            <path d="M24.5 24.5 L34 34" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="20" cy="20" r="2.5" fill="#C9A84C" opacity=".6"/>
+          </svg>
+        </div>
+        <h3>Portfólio Exclusivo</h3>
+        <p>Imóveis selecionados e verificados para garantir a melhor relação custo-benefício.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-visual">
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+          <!-- Sky gradient -->
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0B2545"/>
+              <stop offset="100%" stop-color="#163A6B"/>
+            </linearGradient>
+            <linearGradient id="bldg1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1A3A5E"/>
+              <stop offset="100%" stop-color="#0D2040"/>
+            </linearGradient>
+          </defs>
+          <rect width="480" height="360" fill="url(#sky)"/>
+          <!-- Moon -->
+          <circle cx="380" cy="55" r="22" fill="rgba(201,168,76,.15)"/>
+          <circle cx="390" cy="48" r="18" fill="#0B2545"/>
+          <!-- Stars -->
+          <g fill="rgba(255,255,255,.5)" font-size="4">
+            <circle cx="40"  cy="30" r="1.5"/><circle cx="90"  cy="18" r="1"/><circle cx="150" cy="40" r="1.5"/>
+            <circle cx="210" cy="22" r="1"/><circle cx="260" cy="15" r="1.5"/><circle cx="320" cy="35" r="1"/>
+            <circle cx="420" cy="80" r="1"/><circle cx="450" cy="25" r="1.5"/>
+          </g>
+          <!-- Background buildings -->
+          <rect x="0"   y="180" width="60"  height="180" fill="#0D2040" opacity=".8"/>
+          <rect x="65"  y="150" width="50"  height="210" fill="#0F2445" opacity=".8"/>
+          <polygon points="90,150 90,128 65,150" fill="#0F2445" opacity=".8"/>
+          <rect x="340" y="160" width="70"  height="200" fill="#0D2040" opacity=".8"/>
+          <rect x="415" y="140" width="65"  height="220" fill="#0F2445" opacity=".8"/>
+          <polygon points="447,140 447,118 415,140" fill="#0F2445" opacity=".8"/>
+          <!-- Main building (center) -->
+          <rect x="130" y="100" width="220" height="260" fill="url(#bldg1)"/>
+          <polygon points="240,100 240,72 130,100" fill="#163A6B"/>
+          <polygon points="240,100 240,72 350,100" fill="#1A4070"/>
+          <!-- Building windows grid -->
+          <g fill="rgba(201,168,76,.22)">
+            <rect x="145" y="115" width="18" height="22"/><rect x="170" y="115" width="18" height="22"/>
+            <rect x="195" y="115" width="18" height="22"/><rect x="220" y="115" width="18" height="22"/>
+            <rect x="245" y="115" width="18" height="22"/><rect x="270" y="115" width="18" height="22"/>
+            <rect x="295" y="115" width="18" height="22"/><rect x="320" y="115" width="18" height="22"/>
+            <rect x="145" y="145" width="18" height="22"/><rect x="170" y="145" width="18" height="22"/>
+            <rect x="195" y="145" width="18" height="22"/><rect x="220" y="145" width="18" height="22"/>
+            <rect x="245" y="145" width="18" height="22"/><rect x="270" y="145" width="18" height="22"/>
+            <rect x="295" y="145" width="18" height="22"/><rect x="320" y="145" width="18" height="22"/>
+            <rect x="145" y="175" width="18" height="22"/><rect x="170" y="175" width="18" height="22"/>
+            <rect x="220" y="175" width="18" height="22"/><rect x="245" y="175" width="18" height="22"/>
+            <rect x="295" y="175" width="18" height="22"/><rect x="320" y="175" width="18" height="22"/>
+            <rect x="145" y="205" width="18" height="22"/><rect x="170" y="205" width="18" height="22"/>
+            <rect x="195" y="205" width="18" height="22"/><rect x="245" y="205" width="18" height="22"/>
+            <rect x="270" y="205" width="18" height="22"/><rect x="320" y="205" width="18" height="22"/>
+          </g>
+          <!-- Lit windows (bright) -->
+          <g fill="rgba(201,168,76,.65)">
+            <rect x="195" y="145" width="18" height="22"/>
+            <rect x="270" y="175" width="18" height="22"/>
+            <rect x="195" y="205" width="18" height="22"/>
+          </g>
+          <!-- Door -->
+          <rect x="212" y="290" width="56" height="70" rx="4" fill="#0A1E38"/>
+          <rect x="216" y="295" width="23" height="60" rx="2" fill="rgba(201,168,76,.15)"/>
+          <rect x="241" y="295" width="23" height="60" rx="2" fill="rgba(201,168,76,.15)"/>
+          <!-- Ground -->
+          <rect x="0" y="355" width="480" height="5" fill="rgba(201,168,76,.15)"/>
+          <!-- Left side buildings windows -->
+          <g fill="rgba(201,168,76,.18)" opacity=".8">
+            <rect x="10"  y="195" width="12" height="14"/><rect x="27"  y="195" width="12" height="14"/>
+            <rect x="44"  y="195" width="12" height="14"/><rect x="10"  y="215" width="12" height="14"/>
+            <rect x="27"  y="215" width="12" height="14"/><rect x="44"  y="215" width="12" height="14"/>
+            <rect x="72"  y="162" width="12" height="14"/><rect x="90"  y="162" width="12" height="14"/>
+            <rect x="72"  y="182" width="12" height="14"/><rect x="90"  y="182" width="12" height="14"/>
+          </g>
+          <!-- Right side windows -->
+          <g fill="rgba(201,168,76,.18)" opacity=".8">
+            <rect x="355" y="175" width="12" height="14"/><rect x="373" y="175" width="12" height="14"/>
+            <rect x="391" y="175" width="12" height="14"/><rect x="355" y="195" width="12" height="14"/>
+            <rect x="373" y="195" width="12" height="14"/><rect x="391" y="195" width="12" height="14"/>
+            <rect x="422" y="155" width="12" height="14"/><rect x="440" y="155" width="12" height="14"/>
+            <rect x="422" y="175" width="12" height="14"/><rect x="440" y="175" width="12" height="14"/>
+          </g>
+        </svg>
+        <span class="sobre-visual-badge">✦ Desde 2004</span>
+      </div>
+      <div class="sobre-text">
+        <span class="section-label">Sobre nós</span>
+        <h2 class="section-title">Realizando sonhos há mais de 20 anos</h2>
+        <p>A Ghiraldelli Imobiliária nasceu do desejo de transformar a experiência de comprar, vender e alugar imóveis no Brasil. Com uma equipe apaixonada e comprometida, oferecemos muito mais do que transações: oferecemos confiança.</p>
+        <p>Seja qual for o seu objetivo — adquirir a casa dos sonhos, investir com segurança ou encontrar o espaço comercial ideal — estamos aqui para guiar cada passo da sua jornada.</p>
+        <ul class="checklist">
+          <li>CRECI credenciado</li>
+          <li>Avaliação gratuita</li>
+          <li>Financiamento facilitado</li>
+          <li>Contratos seguros</li>
+          <li>Atendimento pós-venda</li>
+          <li>Suporte 7 dias por semana</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA WHATSAPP -->
+<section id="contato">
+  <div id="cta-whatsapp">
+    <div class="container">
+      <h2>Pronto para encontrar seu imóvel ideal?</h2>
+      <p>Fale agora com um de nossos especialistas. Atendimento rápido e sem compromisso.</p>
+      <a id="cta-wpp-btn" href="#" target="_blank" class="btn-whatsapp-lg">
+        💬 Falar no WhatsApp agora
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <svg class="logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          <div class="nav-logo-text">Ghiraldelli<span>Imobiliária</span></div>
+        </div>
+        <p>Realizando sonhos e construindo histórias há mais de 20 anos. Sua confiança é o nosso maior patrimônio.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Links</h4>
+        <a href="./index.html">Início</a>
+        <a href="./imoveis.html">Imóveis</a>
+        <a href="#sobre">Sobre nós</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href="#" id="footer-wpp">💬 WhatsApp</a>
+        <a href="#">📍 São Paulo, SP</a>
+        <a href="#">📧 contato@ghiraldelli.com.br</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 <span>Ghiraldelli Imobiliária</span>. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Flutuante -->
+<a id="wpp-float" href="#" target="_blank" class="whatsapp-float" title="Falar no WhatsApp">💬</a>
+
+<script src="./js/app.js"></script>
+<script>
+  // Carregar destaques
+  async function loadDestaques() {
+    try {
+      const data = await apiGet('/imoveis?destaque=1&limit=6');
+      document.getElementById('stat-total').textContent = '+' + (await apiGet('/imoveis?limit=1')).total;
+      const grid = document.getElementById('grid-destaques');
+      if (!data.imoveis.length) {
+        grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🏠</div><p>Nenhum imóvel em destaque no momento.</p></div>';
+        return;
+      }
+      grid.innerHTML = data.imoveis.map(buildCard).join('');
+    } catch(e) {
+      document.getElementById('grid-destaques').innerHTML = '<div class="empty-state" style="grid-column:1/-1"><p>Erro ao carregar imóveis.</p></div>';
+    }
+  }
+
+  function buscar() {
+    const tipo      = document.getElementById('s-tipo').value;
+    const transacao = document.getElementById('s-transacao').value;
+    const cidade    = document.getElementById('s-cidade').value;
+    const params    = new URLSearchParams();
+    if (tipo)      params.set('tipo', tipo);
+    if (transacao) params.set('transacao', transacao);
+    if (cidade)    params.set('cidade', cidade);
+    window.location.href = './imoveis.html?' + params.toString();
+  }
+
+  document.getElementById('s-cidade').addEventListener('keydown', e => { if (e.key === 'Enter') buscar(); });
+
+  // Atualiza link CTA WhatsApp após carregar config
+  const origLoad = loadWhatsapp;
+  loadWhatsapp = async function() {
+    await origLoad();
+    const link = whatsappLink(null);
+    document.getElementById('cta-wpp-btn').href  = link;
+    document.getElementById('footer-wpp').href   = link;
+  };
+
+  loadDestaques();
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Detalhes do Imóvel – Ghiraldelli Imobiliária</title>
+  <link rel="stylesheet" href="./css/style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <a href="./index.html" class="nav-logo">
+      <svg class="logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      <div class="nav-logo-text">Ghiraldelli<span>Imobiliária</span></div>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="./index.html">Início</a></li>
+      <li><a href="./imoveis.html">Imóveis</a></li>
+      <li><a href="./index.html#sobre">Sobre</a></li>
+      <li><a href="./index.html#contato">Contato</a></li>
+      <li><a href="./admin/login.html" class="btn btn-ouro btn-sm">Área Admin</a></li>
+    </ul>
+    <div class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="page-header" style="padding:100px 0 24px">
+  <div class="container">
+    <p style="color:#A8C0D8;font-size:.9rem">
+      <a href="./index.html" style="color:#A8C0D8">Início</a> ›
+      <a href="./imoveis.html" style="color:#A8C0D8">Imóveis</a> ›
+      <span id="breadcrumb-titulo" style="color:var(--ouro-lt)">Carregando…</span>
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="detalhe-grid" id="detalhe-grid">
+    <div style="grid-column:1/-1;text-align:center;padding:3rem">
+      <div style="font-size:3rem">⏳</div><p style="color:var(--txt-m);margin-top:1rem">Carregando imóvel...</p>
+    </div>
+  </div>
+</div>
+
+<!-- RELACIONADOS -->
+<section style="background:var(--off);padding:60px 0">
+  <div class="container">
+    <span class="section-label">Veja também</span>
+    <h2 class="section-title">Imóveis Similares</h2>
+    <div class="property-grid" id="grid-relacionados"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <svg class="logo-mark" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><rect width="42" height="42" rx="9" fill="#C9A84C"/><path d="M8 21 L8 34 L34 34 L34 21 L21 11 Z" fill="white" opacity=".95"/><rect x="17" y="23" width="8" height="11" rx="1" fill="#A88730"/><rect x="9" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><rect x="27" y="21" width="6" height="6" rx=".5" fill="#A88730" opacity=".6"/><path d="M5 22 L21 9 L37 22" stroke="rgba(255,255,255,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          <div class="nav-logo-text">Ghiraldelli<span>Imobiliária</span></div>
+        </div>
+        <p>Realizando sonhos e construindo histórias há mais de 20 anos.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Links</h4>
+        <a href="./index.html">Início</a>
+        <a href="./imoveis.html">Imóveis</a>
+        <a href="./index.html#sobre">Sobre nós</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a id="footer-wpp" href="#">💬 WhatsApp</a>
+        <a href="#">📍 São Paulo, SP</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 <span>Ghiraldelli Imobiliária</span>. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<a id="wpp-float" href="#" target="_blank" class="whatsapp-float" title="Falar no WhatsApp">💬</a>
+
+<script src="./js/app.js"></script>
+<script>
+  let imovel = null;
+
+  function renderGallery(fotos) {
+    if (!fotos || !fotos.length) {
+      return `<div class="gallery-main"><div class="gallery-main-placeholder">🏠</div></div>`;
+    }
+    const thumbs = fotos.map((f, i) =>
+      `<div class="gallery-thumb ${i===0?'active':''}" onclick="changePhoto(this, '${fotoUrl(f.caminho)}')">
+        <img src="${fotoUrl(f.caminho)}" alt="Foto ${i+1}">
+      </div>`
+    ).join('');
+    return `
+      <div class="gallery-main">
+        <img id="gallery-main-img" src="${fotoUrl(fotos[0].caminho)}" alt="Foto principal">
+      </div>
+      ${fotos.length > 1 ? `<div class="gallery-thumbs">${thumbs}</div>` : ''}`;
+  }
+
+  function changePhoto(thumb, src) {
+    document.getElementById('gallery-main-img').src = src;
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+  }
+
+  function renderSpecs(im) {
+    const specs = [];
+    if (im.area)      specs.push({ label: 'Área', val: formatArea(im.area) });
+    if (im.quartos)   specs.push({ label: 'Quartos', val: im.quartos });
+    if (im.banheiros) specs.push({ label: 'Banheiros', val: im.banheiros });
+    if (im.vagas)     specs.push({ label: 'Vagas', val: im.vagas });
+    if (im.cidade)    specs.push({ label: 'Cidade', val: im.cidade });
+    if (im.bairro)    specs.push({ label: 'Bairro', val: im.bairro });
+    return specs.map(s => `
+      <div class="spec-item">
+        <span>${s.label}</span>
+        <span>${s.val}</span>
+      </div>`).join('');
+  }
+
+  async function loadImovel() {
+    const id = new URLSearchParams(location.search).get('id');
+    if (!id) { window.location.href = './imoveis.html'; return; }
+
+    try {
+      imovel = await apiGet(`/imoveis/${id}`);
+      document.title = `${imovel.titulo} – Ghiraldelli Imobiliária`;
+      document.getElementById('breadcrumb-titulo').textContent = imovel.titulo;
+
+      const grid = document.getElementById('detalhe-grid');
+      grid.innerHTML = `
+        <div>
+          ${renderGallery(imovel.fotos)}
+          <div class="descricao-section">
+            <h2>Descrição</h2>
+            <p>${imovel.descricao || 'Consulte nossa equipe para mais informações sobre este imóvel.'}</p>
+          </div>
+        </div>
+        <div>
+          <div class="detalhe-info">
+            <div style="display:flex;gap:8px;margin-bottom:1rem">
+              <span class="badge badge-${imovel.transacao.toLowerCase()}">${imovel.transacao}</span>
+              <span class="badge" style="background:rgba(22,58,107,.08);color:var(--azul-med)">${imovel.tipo}</span>
+              ${imovel.destaque ? '<span class="badge badge-destaque">⭐ Destaque</span>' : ''}
+            </div>
+            <div class="detalhe-price">
+              ${formatPrice(imovel.preco, imovel.transacao)}
+              <small>${imovel.transacao === 'Aluguel' ? 'por mês' : 'valor de venda'}</small>
+            </div>
+            <div class="detalhe-title">${imovel.titulo}</div>
+            <div class="detalhe-location">📍 ${imovel.bairro ? imovel.bairro + ', ' : ''}${imovel.cidade}</div>
+            <div class="specs-grid">${renderSpecs(imovel)}</div>
+            <a id="btn-wpp-detalhe" href="${whatsappLink(imovel)}" target="_blank" class="btn btn-whatsapp detalhe-wpp btn-lg">
+              💬 Tenho interesse — WhatsApp
+            </a>
+            <a href="./imoveis.html" class="btn btn-ghost detalhe-contato" style="border-color:var(--cinza-md);color:var(--txt-m)">
+              ← Ver todos os imóveis
+            </a>
+          </div>
+        </div>`;
+
+      loadRelacionados(imovel.tipo, imovel.id);
+    } catch {
+      document.getElementById('detalhe-grid').innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:3rem">
+          <div style="font-size:3rem">😕</div>
+          <p style="color:var(--txt-m);margin-top:1rem">Imóvel não encontrado.</p>
+          <a href="./imoveis.html" class="btn btn-azul" style="margin-top:1.5rem">Ver todos os imóveis</a>
+        </div>`;
+    }
+  }
+
+  async function loadRelacionados(tipo, excludeId) {
+    try {
+      const data = await apiGet(`/imoveis?tipo=${tipo}&limit=3`);
+      const filtrados = data.imoveis.filter(i => i.id != excludeId);
+      const grid = document.getElementById('grid-relacionados');
+      grid.innerHTML = filtrados.length ? filtrados.map(buildCard).join('') : '';
+    } catch {}
+  }
+
+  // Atualiza link WPP após carregar config
+  const origLoad = loadWhatsapp;
+  loadWhatsapp = async function() {
+    await origLoad();
+    if (imovel) {
+      const btn = document.getElementById('btn-wpp-detalhe');
+      if (btn) btn.href = whatsappLink(imovel);
+    }
+    document.getElementById('footer-wpp').href = whatsappLink(null);
+  };
+
+  loadImovel();
+</script>
+</body>
+</html>
